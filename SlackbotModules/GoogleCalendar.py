@@ -33,16 +33,20 @@ def GetEvents():
 
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    tdy = datetime.datetime.utcnow()+timedelta(days=1)
+    tdy = datetime.datetime.utcnow()+timedelta(hours=18)
     endt = tdy.isoformat() + 'Z'
     events_result = service.events().list(calendarId='primary', timeMin=now,
                                         timeMax=endt, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
-
+    message = ""
     if not events:
-        print('No upcoming events found.')
+        message +="本日の予定はありません"
+    message+="本日の予定は以下の通りです\n"
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-GetEvents()
+        #start="yyyy-mm-ddThh:mm:ss+9:00"
+        message+=(start[11:16]+" "+event['summary']+"\n") 
+    #print(message)
+    return message
+#GetEvents()
