@@ -1,4 +1,3 @@
-#google calendar関連
 from __future__ import print_function
 import datetime
 import os.path
@@ -39,10 +38,11 @@ def GetEvents():
                                         timeMax=endt, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
-    message = ""
+    message = "\n"
     if not events:
-        message +="本日の予定はありません"
-    message+="本日の予定は以下の通りです\n"
+        message +="本日の予定はありません。"
+    else:
+        message+="本日の予定は以下の通りです。\n"
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         #start="yyyy-mm-ddThh:mm:ss+9:00"

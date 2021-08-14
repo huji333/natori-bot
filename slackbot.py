@@ -1,6 +1,7 @@
+import urllib.request
 from SlackbotModules import GoogleCalendar
 from SlackbotModules import Weather
-#slackbot関連
+#slackbot
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -11,9 +12,14 @@ from slack_sdk.errors import SlackApiError
 slack_token = os.environ["SLACK_BOT_TOKEN"]
 client = WebClient(token = slack_token)
 
-#おはように対して
+#In responce to "Good Morning"
 def morning():
-    slack_message = "おはようございナース:eggplant:"+"\n"+GoogleCalendar.GetEvents()
+    #get weather
+    # url = "https://www.jma.go.jp/bosai/forecast/data/forecast/260000.json"
+    # filename = "Weather.json"
+    # urllib.request.urlretrieve(url,filename)
+
+    slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()+GoogleCalendar.GetEvents()
     try:
         response = client.chat_postMessage(
             channel="C02A7S2JGU9",
