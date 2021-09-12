@@ -40,13 +40,13 @@ def GetEvents():
     events = events_result.get('items', [])
     message = "\n"
     if not events:
-        message +="本日の予定はありません。"
+        message +="*予定*"
     else:
-        message+="本日の予定は以下の通りです。\n"
+        message+="*予定*\n"
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         #start="yyyy-mm-ddThh:mm:ss+9:00"
-        message+=(start[11:16]+" "+event['summary']+"\n") 
-    #print(message)
+        message+=(start[11:16]+" "+event['summary']+" "+event['location']+"\n") 
+    # print(message)
     return message
-#GetEvents()
+# GetEvents()

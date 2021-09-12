@@ -1,4 +1,3 @@
-import urllib.request
 from SlackbotModules import GoogleCalendar
 from SlackbotModules import Weather
 #slackbot
@@ -16,10 +15,10 @@ client = WebClient(token = slack_token)
 def morning():
     #get weather
     # url = "https://www.jma.go.jp/bosai/forecast/data/forecast/260000.json"
-    # filename = "Weather.json"
+    # filename = "weather.json"
     # urllib.request.urlretrieve(url,filename)
 
-    slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()+GoogleCalendar.GetEvents()
+    slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()#+GoogleCalendar.GetEvents()
     try:
         response = client.chat_postMessage(
             channel="C02A7S2JGU9",
