@@ -13,12 +13,7 @@ client = WebClient(token = slack_token)
 
 #In responce to "Good Morning"
 def morning():
-    #get weather
-    # url = "https://www.jma.go.jp/bosai/forecast/data/forecast/260000.json"
-    # filename = "weather.json"
-    # urllib.request.urlretrieve(url,filename)
-
-    slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()#+GoogleCalendar.GetEvents()
+    slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()+GoogleCalendar.GetEvents()+"*課題*\nなし!"
     try:
         response = client.chat_postMessage(
             channel="C02A7S2JGU9",

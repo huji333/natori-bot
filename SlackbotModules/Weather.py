@@ -10,7 +10,7 @@ def GetWeather():
     for i in range(4):
         message+=(WeatherData[0]["timeSeries"][1]["timeDefines"][i][11:16]+"-:"+WeatherData[0]["timeSeries"][1]["areas"][0]["pops"][i]+"%　")
     message+=("\n>*気温*　"+WeatherData[0]["timeSeries"][2]["areas"][0]["temps"][0]+"　"+WeatherData[0]["timeSeries"][2]["areas"][0]["temps"][1])
-    message+=("\n\n明日の天気は、"+WeatherData[0]["timeSeries"][0]["areas"][0]["weathers"][1]+"　なのです。\n")
+    message+=("\n>*明日の天気*　"+WeatherData[0]["timeSeries"][0]["areas"][0]["weathers"][1]+"\n")
     return message
 #     print(message)
 # GetWeather()
