@@ -1,6 +1,5 @@
 from SlackbotModules import GoogleCalendar
 from SlackbotModules import Weather
-#slackbot
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -11,7 +10,6 @@ from slack_sdk.errors import SlackApiError
 slack_token = os.environ["SLACK_BOT_TOKEN"]
 client = WebClient(token = slack_token)
 
-#In responce to "Good Morning"
 def morning():
     slack_message = "おはようございナース:eggplant:\n\n"+Weather.GetWeather()+GoogleCalendar.GetEvents()+"*課題*\nなし!"
     try:
@@ -21,4 +19,6 @@ def morning():
         )
     except SlackApiError as e:
         assert e.response["error"]
-morning()
+
+if __name__=="__main__":
+    morning()
