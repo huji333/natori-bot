@@ -7,7 +7,6 @@ import pygame
 import audio
 from datetime import timedelta
 from datetime import datetime
-from multiprocessing import Process
 from concurrent.futures import ThreadPoolExecutor
 
 def play_audio(path,n):
@@ -58,7 +57,7 @@ def alarm():
         if datetime.now().strftime("%H:%M")=="23:00":
             reminder("23")
         time.sleep(60)
-#Process(target=alarm, args=()).start()
+
 ThreadPoolExecutor().submit(alarm)
 
 while True:
@@ -84,10 +83,12 @@ while True:
         if "おやすみ" in res:
             awake = False
             play_audio("Voices/Oyasumi.wav",0)
+            slackbot.slept()
         if "いってきます" in res:
             play_audio("Voices/Itterassyai.wav",0)
+            slackbot.gone()
         if "ただいま" in res:
             play_audio("Voices/okaeri.wav",0)
+            slackbot.returned()
         fin_flag=False
         res=""
-

@@ -20,5 +20,22 @@ def morning():
     except SlackApiError as e:
         assert e.response["error"]
 
-if __name__=="__main__":
-    morning()
+def slept():
+    try:
+        response = client.chat_postMessage(
+            channel="C02A7S2JGU9",
+            text="ふじくんが寝ました!"
+        )
+
+def returned():
+    try:
+        response = client.chat_postMessage(
+            channel="C02A7S2JGU9",
+            text="ふじくんが帰ってきました!"
+        )
+def gone():
+    try:
+        response = client.chat_postMessage(
+            channel="C02A7S2JGU9",
+            text="ふじくんが出かけました!"
+        )
