@@ -2,7 +2,6 @@ import socket
 import time
 import datetime
 import json
-import schedule
 import slackbot
 from pygame import mixer
 from datetime import timedelta
@@ -22,15 +21,15 @@ def read_json(s):
 def ring_alarm(x):
     if x=='a':
         if not awake:
-            play_audio("Voices/alarm1.wav",3)
+            play_audio("Voices/Okitemasuka.wav",3)
     if x=='s':
         if not awake:
             play_audio("Voices/Okite.wav",5)
 def reminder(x):
     if x=="22":
-        play_audio("Voices/2200.wav")
+        play_audio("Voices/2200.wav",0)
     if x=="23":
-        play_audio("Voices/2300.wav")
+        play_audio("Voices/2300.wav",0)
 
 
 awake = False
@@ -40,14 +39,12 @@ sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 sock.connect((host,port))
 res=''
 
-#schedule
-schedule.every().day.at("22:00").do(reminder("22"))
-schedule.every().day.at("23:00").do(reminder("23"))
-
 #julius
 while True:
-    while (res.find('\n')==-1)
-    res+=sock.recv(1024)
+    while (res.find('\n.')==-1):
+        res+=sock.recv(1024)
+
+    word=""
     for line in res.split('\n'):
         index=line.find('WORD=')
         if index != -1:
@@ -55,7 +52,7 @@ while True:
         if line != '[s]':
             word+=line
 
-    if word == "おはよう"
+    if word == "おはよう":
         pygame.mixer.music.stop()
         if not awake:
             awake = True
@@ -64,18 +61,13 @@ while True:
             else:
                 play_audio("Voices/konnichiwa.wav",0)
             slackbot.morning()
-    if word == "おやすみ"
+    if word == "おやすみ":
         awake = False
         play_audio("Voices/Oyasumi.wav",0)
-    if word == "いってきます"
+    if word == "いってきます":
         play_audio("Voices/Itterassyai.wav",0)
-    if word == "ただいま"
+    if word == "ただいま":
         play_audio("Voices/okaeri.wav",0)
-
-#schedule
-while True:
-    schedule.run_pending()
-    time.sleep(1)
 
 #alarm
 while True:
@@ -83,4 +75,8 @@ while True:
         ring_alarm("a")
     if datetime.now().strftime("%H:%M")==read_json("snooze"):
         ring_alarm("s")
+    if datetime.now().strftime("%H:%M")=="22:00":
+        reminder("22")
+    if datetime.now().strftime("%H:%M")=="23:00":
+        reminder("23")
     time.sleep(60)
