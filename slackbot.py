@@ -26,6 +26,9 @@ def slept():
             channel="C02A7S2JGU9",
             text="ふじくんが寝ました!"
         )
+    except SlackApiError as e:
+        assert e.response["error"]
+
 
 def returned():
     try:
@@ -33,9 +36,13 @@ def returned():
             channel="C02A7S2JGU9",
             text="ふじくんが帰ってきました!"
         )
+    except SlackApiError as e:
+        assert e.response["error"]
 def gone():
     try:
         response = client.chat_postMessage(
             channel="C02A7S2JGU9",
             text="ふじくんが出かけました!"
         )
+    except SlackApiError as e:
+        assert e.response["error"]
