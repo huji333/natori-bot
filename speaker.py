@@ -45,40 +45,39 @@ res=""
 fin_flag=False
 
 
-def julius():
-    while True:
-        data = sock.recv(DATASIZE).decode('utf-8')
+while True:
+    data = sock.recv(DATASIZE).decode('utf-8')
 
-        word=""
-        for line in data.split('\n'):
-            index=line.find('WORD=')
-            if index != -1:
-                res += line[index+6:line.find('"',index+6)]
-            if line != '[s]':
-                word+=line
-            if '</RECOGOUT>' in line:
-                fin_flag=True
-        if fin_flag:
-            if "おはよう" in res:
-                if awake:
-                    print(awake)
-                mixer.music.stop()
-                if not awake:
-                    awake = True
-                    if datetime.strptime(datetime.now().strftime("%H:%M"),"%H:%M")<datetime.strptime("11:00","%H:%M"):
-                        play_audio("Voices/Ohayou.wav",0)
-                    else:
-                        play_audio("Voices/konnnichiwa.wav",0)
-                    slackbot.morning()
-            if "おやすみ" in res:
-                awake = False
-                play_audio("Voices/Oyasumi.wav",0)
-            if "いってきます" in res:
-                play_audio("Voices/Itterassyai.wav",0)
-            if "ただいま" in res:
-                play_audio("Voices/okaeri.wav",0)
-            fin_flag=False
-            res=""
+    word=""
+    for line in data.split('\n'):
+        index=line.find('WORD=')
+        if index != -1:
+            res += line[index+6:line.find('"',index+6)]
+        if line != '[s]':
+            word+=line
+        if '</RECOGOUT>' in line:
+            fin_flag=True
+    if fin_flag:
+        if "おはよう" in res:
+            if awake:
+                print(awake)
+            mixer.music.stop()
+            if not awake:
+                awake = True
+                if datetime.strptime(datetime.now().strftime("%H:%M"),"%H:%M")<datetime.strptime("11:00","%H:%M"):
+                    play_audio("Voices/Ohayou.wav",0)
+                else:
+                    play_audio("Voices/konnnichiwa.wav",0)
+                slackbot.morning()
+        if "おやすみ" in res:
+            awake = False
+            play_audio("Voices/Oyasumi.wav",0)
+        if "いってきます" in res:
+            play_audio("Voices/Itterassyai.wav",0)
+        if "ただいま" in res:
+            play_audio("Voices/okaeri.wav",0)
+        fin_flag=False
+        res=""
 
 def alarm():
     while True:
