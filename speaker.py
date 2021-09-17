@@ -35,39 +35,48 @@ def reminder(x):
 awake = False
 host='localhost'
 port=10500
-sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-sock.connect((host,port))
-res=''
+DATASIZE=1024
+self.sock=None
+
+with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as self.sock:
+    self.sock.connect((host,port))
+
+    res=""
+    fin_flag=False
+
 
 #julius
 while True:
-    while (res.find('\n.')==-1):
-        res+=sock.recv(1024)
+    data = self.sock.recv(DATASIZE).decode('utf-8')
 
     word=""
-    for line in res.split('\n'):
+    for line in data.split('\n'):
         index=line.find('WORD=')
         if index != -1:
-            line=line[index+6:line.find('"',index+6)]
+            res += line[index+6:line.find('"',index+6)]
         if line != '[s]':
             word+=line
-
-    if word == "おはよう":
-        pygame.mixer.music.stop()
-        if not awake:
-            awake = True
-            if datetime.strptime(datetime.now().strftime("%H:%M"),"%H:%M")<datetime.strptime("11:00","%H:%M"):
-                play_audio("Voices/Ohayou.wav",0)
-            else:
-                play_audio("Voices/konnichiwa.wav",0)
-            slackbot.morning()
-    if word == "おやすみ":
-        awake = False
-        play_audio("Voices/Oyasumi.wav",0)
-    if word == "いってきます":
-        play_audio("Voices/Itterassyai.wav",0)
-    if word == "ただいま":
-        play_audio("Voices/okaeri.wav",0)
+        if '</RECOGOUT>' in line:
+            fin_flag=True
+    if fin_flag:
+        if "おはよう" in res:
+            pygame.mixer.music.stop()
+            if not awake:
+                awake = True
+                if datetime.strptime(datetime.now().strftime("%H:%M"),"%H:%M")<datetime.strptime("11:00","%H:%M"):
+                    play_audio("Voices/Ohayou.wav",0)
+                else:
+                    play_audio("Voices/konnichiwa.wav",0)
+                slackbot.morning()
+        if "おやすみ" in res:
+            awake = False
+            play_audio("Voices/Oyasumi.wav",0)
+        if "いってきます" in res:
+            play_audio("Voices/Itterassyai.wav",0)
+        if "ただいま" in res:
+            play_audio("Voices/okaeri.wav",0)
+            fin_flag=False
+            res=""
 
 #alarm
 while True:
