@@ -1,11 +1,14 @@
 import json
 import urllib.request
 def GetWeather():
+    #Retrieve .json
     url = "https://www.jma.go.jp/bosai/forecast/data/forecast/260000.json"
     filename = "weather.json"
     urllib.request.urlretrieve(url,filename)
     with open("weather.json","r",encoding="UTF-8") as f:
         WeatherData=json.load(f)
+
+    #Slack message
     message = "*天気*\n"+WeatherData[0]["timeSeries"][0]["areas"][0]["weathers"][0]+"\n>*降水確率*　"
     for i in range(4):
         message+=(WeatherData[0]["timeSeries"][1]["timeDefines"][i][11:16]+"-:"+WeatherData[0]["timeSeries"][1]["areas"][0]["pops"][i]+"%　")

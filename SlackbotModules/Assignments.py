@@ -4,9 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 
 def GetAssignments():
-    username="a0217658"
-    password = ""
-
+    #Login
+    username=os.environ[PANDA_USERNAME]
+    password =os.environ[PANDA_PASSWORD]
     payload={
         "username":username,
         "password":password
@@ -21,11 +21,13 @@ def GetAssignments():
     payload['lt'] = lt
     payload['execution'] = execution
     payload['_eventId'] = _eventId
-
     res_home=sess.post(url_login,data=payload)
 
+    #Retrieve .json
     url_json="https://panda.ecs.kyoto-u.ac.jp/direct/assignment/my.json"
     urllib.request.urlretrieve(url_json,"assignments.json")
+
+    #message
     message="*課題*\n"
     message+="なし!"
 #GetAssignments()
