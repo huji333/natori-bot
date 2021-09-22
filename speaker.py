@@ -47,7 +47,6 @@ fin_flag=False
 
 def alarm():
     while True:
-        print(datetime.now().strftime("%H:%M"))
         if datetime.now().strftime("%H:%M")==read_json("alarm"):
             ring_alarm("a")
         if datetime.now().strftime("%H:%M")==read_json("snooze"):

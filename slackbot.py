@@ -12,7 +12,7 @@ slack_token = os.environ["SLACK_BOT_TOKEN"]
 client = WebClient(token = slack_token)
 
 def morning():
-    slack_message = "おはようございナース:eggplant:\n"+Weather.get_weather()+GoogleCalendar.get_events()+Assignment.get_assignments()
+    slack_message = "おはようございナース:eggplant:\n"+Weather.get_weather()+GoogleCalendar.get_events()+Assignments.get_assignments()
     try:
         response = client.chat_postMessage(
             channel="C02A7S2JGU9",
