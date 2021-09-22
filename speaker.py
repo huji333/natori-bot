@@ -4,7 +4,6 @@ import datetime
 import json
 import slackbot
 import pygame
-import audio
 from datetime import timedelta
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
@@ -28,9 +27,11 @@ def ring_alarm(x):
         play_audio("Voices/Okite.wav",5)
 def reminder(x):
     if x=="22":
-        play_audio("Voices/2200.wav",0)
+        if awake:
+            play_audio("Voices/2200.wav",0)
     if x=="23":
-        play_audio("Voices/2300.wav",0)
+        if awake:
+            play_audio("Voices/2300.wav",0)
 #init
 pygame.init()
 pygame.mixer.init()

@@ -9,7 +9,7 @@ from datetime import timedelta
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
-def GetEvents(): 
+def get_events(): 
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -38,15 +38,9 @@ def GetEvents():
                                         timeMax=endt, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
-    message = "\n"
-    if not events:
-        message +="*予定*\n"
-    else:
-        message+="*予定*\n"
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            #start="yyyy-mm-ddThh:mm:ss+9:00"
-            message+=(">"+start[11:16]+" "+event['summary']+" "+event['location']+"\n") 
-    # print(message)
+    #message
+    message = "\n*予定*\n"
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        message+=(">"+start.strftime("%H:%M")+" "+event['summary']+"\n")
     return message
-# GetEvents()

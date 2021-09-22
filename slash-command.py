@@ -13,10 +13,10 @@ app = App(
 def repeat_text(ack, respond,command):
     ack()
     #encode in Alarm.json
-    snoozeDatetime=datetime.strptime(command['text'],"%H:%M")+timedelta(minutes=5)
+    sooze_datetime=datetime.strptime(command['text'],"%H:%M")+timedelta(minutes=5)
     jsonObject = {
         "alarm":command['text'],
-        "snooze":snoozeDatetime.strftime("%H:%M")
+        "snooze":sooze_datetime.strftime("%H:%M")
     }
     file = open("Alarm.json","w")
     json.dump(jsonObject,file)
