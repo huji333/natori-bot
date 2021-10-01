@@ -12,7 +12,7 @@ def get_weather():
     message = "\n*天気*\n"+weather_data[0]["timeSeries"][0]["areas"][0]["weathers"][0]+"\n>*降水確率*　"
     for i in range(4):
         message+=(weather_data[0]["timeSeries"][1]["timeDefines"][i][11:16]+"-:"+weather_data[0]["timeSeries"][1]["areas"][0]["pops"][i]+"%　")
-    message+=("\n>*気温*　"+weather_data[0]["timeSeries"][2]["areas"][0]["temps"][0]+"　"+weather_data[0]["timeSeries"][2]["areas"][0]["temps"][1])
+    message+=("\n>*気温*　"+weather_data[0]["timeSeries"][2]["areas"][0]["temps"][1]+"　"+weather_data[0]["timeSeries"][2]["areas"][0]["temps"][2])
     message+=("\n>*明日の天気*　"+weather_data[0]["timeSeries"][0]["areas"][0]["weathers"][1]+"\n")
     return message
 

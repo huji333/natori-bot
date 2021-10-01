@@ -2,6 +2,7 @@ import os
 import urllib.request
 import requests
 import json
+import datetime
 from bs4 import BeautifulSoup
 
 def get_assignments():
@@ -35,7 +36,7 @@ def get_assignments():
         message+="なし!"
     else:
         for i in range(len(assignments_data["assignment_collection"])):
-            duedt = datetime.strptime(assignments_data["assignment_collection"][i]["dueTimeString"],"%Y-%m-%dT%H:%M:%SZ")
-            due = datetime.strftime(duedt,"%m/%d %H時")
-            message+=(">"+assignments_data["assignment_collection"][i]["title"]+"　締切:"+due+"\n")
+            duedt = datetime.datetime.strptime(assignments_data["assignment_collection"][i]["dueTimeString"],"%Y-%m-%dT%H:%M:%SZ")
+            due = duedt.strftime("%m/%d %H時")
+            message+=(">"+assignments_data["assignment_collection"][i]["title"]+"\n締切:"+due+"\n")
     return message

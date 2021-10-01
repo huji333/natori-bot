@@ -42,5 +42,7 @@ def get_events():
     message = "\n*予定*\n"
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        message+=(">"+start[11:15]+" "+event['summary']+"\n")
+        message+=(">"+start[11:16]+" "+event['summary']+"\n")
     return message
+if __name__=="__main__":
+    get_events()
