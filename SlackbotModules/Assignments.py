@@ -26,11 +26,9 @@ def get_assignments():
 
     #Retrieve .json
     url_json="https://panda.ecs.kyoto-u.ac.jp/direct/assignment/my.json"
-    urllib.request.urlretrieve(url_json,"assignments.json")
-    with open("assignments.json","r",encoding="UTF-8") as f:
-        assignments_data=json.load(f)
+    assignments_json=sess.get(url_json)
+    assignments_data=assignments_json.json()
 
-    print(len(assignments_data["assignment_collection"]))
     #message
     message="\n*課題*\n"
     if len(assignments_data["assignment_collection"])==0:
