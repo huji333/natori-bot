@@ -1,7 +1,7 @@
 # natori-bot
 名取さなに生活管理をしてもらうBot
 ## ブログ記事
-
+https://ku-vtuberlove-sub.hatenablog.jp/entry/natori_bot
 ## Author
 huji333
 
